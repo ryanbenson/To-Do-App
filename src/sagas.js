@@ -10,7 +10,7 @@ export function* watcherSaga() {
 function fetchTasks() {
   return axios({
     method: "get",
-    url: "http://localhost:4567/api/tasks"
+    url: "https://pacific-gorge-44009.herokuapp.com/api/tasks"
   });
 }
 

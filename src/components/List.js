@@ -8,11 +8,25 @@ class List extends React.Component {
     getTasks();
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const name = this.refs.name.value;
+    this.props.addTask(name);
+    this.refs.newTaskForm.reset();
+  }
+
   render() {
     return (
-      <ul>
-        {this.props.tasks.map((task, i) => <Single {...this.props} key={i} i={i} task={task} />)}
-      </ul>
+      <div>
+        <form ref="newTaskForm" className="new-task-form" onSubmit={this.handleSubmit.bind(this)}>
+          <input type="text" ref="name" placeholder="New task" />
+          <input type="submit" hidden />
+        </form>
+        <ul>
+
+          {this.props.tasks.map((task, i) => <Single {...this.props} key={i} i={i} task={task} />)}
+        </ul>
+      </div>
     );
   }
 }

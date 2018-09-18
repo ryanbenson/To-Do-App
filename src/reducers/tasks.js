@@ -13,11 +13,15 @@ function posts(state = [], action) {
       return state;
     case 'ADD_TASK':
       console.log("ADDING A TASK");
-      return state
+      return state;
+    case 'ADD_TASK_SUCESS':
+      return [...state, {name: action.data.name, id: action.data.id}];
     case 'EDIT_TASK':
       console.log("EDITING A TASK");
       return state;
     case 'REMOVE_TASK':
+      return state;
+    case 'REMOVE_TASK_SUCESS':
       state = state.filter((t) => t.id !== action.id);
       return state;
     default:

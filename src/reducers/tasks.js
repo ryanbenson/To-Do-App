@@ -18,7 +18,7 @@ function posts(state = [], action) {
       console.log("EDITING A TASK");
       return state;
     case 'REMOVE_TASK':
-      console.log("REMOVING A TASK");
+      state = state.filter((t) => t.id !== action.id);
       return state;
     default:
       return state;

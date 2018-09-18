@@ -5,6 +5,11 @@ class Main extends React.Component {
   render() {
     return (
       <div>
+        {this.props.loading ? (
+          <p>loading...</p>
+        ) : (
+          <p>&nbsp;</p>
+        )}
         <h1>
           <Link to="/">Unending Tasks</Link>
         </h1>

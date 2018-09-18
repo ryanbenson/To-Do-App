@@ -40,6 +40,9 @@ function addTask(name) {
 
 // worker saga: makes the api call when watcher saga sees the action
 function* workerSaga() {
+  let loading = true;
+  yield put({ type: "START_LOADING", loading });
+
   try {
     const response = yield call(fetchTasks);
     const tasks = response.data;
@@ -51,9 +54,15 @@ function* workerSaga() {
     // dispatch a failure action to the store with the error
     yield put({ type: "GET_TASKS_FAILURE", error });
   }
+
+  loading = false;
+  yield put({ type: "START_LOADING", loading });
 }
 
 function* workerRemoveTask(action) {
+  let loading = true;
+  yield put({ type: "START_LOADING", loading });
+
   try {
     const response = yield call(removeTask, action.id);
     const id = action.id;
@@ -61,9 +70,14 @@ function* workerRemoveTask(action) {
   } catch(error) {
     yield put({ type: 'REMOVE_TASK_ERROR', error});
   }
+
+  loading = false;
+  yield put({ type: "START_LOADING", loading });
 }
 
 function* workerAddTask(action) {
+  let loading = true;
+  yield put({ type: "START_LOADING", loading });
   try {
     const response = yield call(addTask, action.name);
     // yield put({ type: 'ADD_TASK_SUCESS'}, {name: action.name, id: response.data.id});
@@ -72,4 +86,7 @@ function* workerAddTask(action) {
   } catch(error) {
     yield put({ type: 'ADD_TASK_ERROR'}, error);
   }
+
+  loading = false;
+  yield put({ type: "START_LOADING", loading });
 }

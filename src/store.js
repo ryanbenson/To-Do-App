@@ -9,7 +9,8 @@ import { watcherSaga } from "./sagas";
 const sagaMiddleware = createSagaMiddleware();
 
 const defaultState = {
-  tasks: []
+  tasks: [],
+  loading: false
 };
 
 const enhancers = compose(

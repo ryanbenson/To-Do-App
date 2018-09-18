@@ -3,7 +3,7 @@ import React from 'react';
 class Single extends React.Component {
   render() {
     return (
-      <p>single</p>
+      <p>{this.props.task.name}</p>
     );
   }
 }

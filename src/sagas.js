@@ -6,6 +6,7 @@ export function* watcherSaga() {
   yield takeLatest("GET_TASKS", workerSaga);
   yield takeLatest("REMOVE_TASK", workerRemoveTask);
   yield takeLatest("ADD_TASK", workerAddTask);
+  yield takeLatest("EDIT_TASK", workerEditTask);
 }
 
 // function that makes the api request and returns a Promise for response
@@ -32,6 +33,19 @@ function addTask(name) {
   bodyFormData.set('name', name);
   return axios({
     method: "post",
+    url: "https://pacific-gorge-44009.herokuapp.com/api/tasks",
+    data: bodyFormData,
+    config: { headers: {'Content-Type': 'multipart/form-data' }}
+  })
+}
+
+function editTask(data) {
+  console.log(data);
+  let bodyFormData = new FormData();
+  bodyFormData.set('name', data.name);
+  bodyFormData.set('id', data.id);
+  return axios({
+    method: "put",
     url: "https://pacific-gorge-44009.herokuapp.com/api/tasks",
     data: bodyFormData,
     config: { headers: {'Content-Type': 'multipart/form-data' }}
@@ -85,6 +99,21 @@ function* workerAddTask(action) {
     yield put({ type: 'ADD_TASK_SUCESS', data});
   } catch(error) {
     yield put({ type: 'ADD_TASK_ERROR'}, error);
+  }
+
+  loading = false;
+  yield put({ type: "START_LOADING", loading });
+}
+
+function* workerEditTask(action) {
+  let loading = true;
+  yield put({ type: "START_LOADING", loading });
+  try {
+    const response = yield call(editTask, {name: action.name, id: action.id});
+    const data = {name: action.name, id: response.data.id};
+    yield put({ type: 'EDIT_TASK_SUCESS', data});
+  } catch(error) {
+    yield put({ type: 'EDIT_TASK_ERROR'}, error);
   }
 
   loading = false;

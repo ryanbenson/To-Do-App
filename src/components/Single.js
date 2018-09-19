@@ -23,11 +23,11 @@ class Single extends React.Component {
 
   render() {
     return (
-      <p>
+      <li>
         <button onClick={this.props.removeTask.bind(null, this.props.task.id)}>&times;</button>
         <input type="text" ref="name" onChange={this.handleChange.bind(this)} placeholder="Task Info" value={this.state.inputValue} />
         <button onClick={this.handleSubmit.bind(this)}>Update</button>
-      </p>
+      </li>
     );
   }
 }

@@ -23,7 +23,6 @@ class List extends React.Component {
           <input type="submit" hidden />
         </form>
         <ul>
-
           {this.props.tasks.map((task, i) => <Single {...this.props} key={i} i={i} task={task} />)}
         </ul>
       </div>
